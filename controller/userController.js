@@ -77,7 +77,7 @@ const logout = async (req, res) => {
 const protect = async (req, res, next) => {
   // 1) Getting token and check of it's there
   const token = req.cookies.jwt;
-  // console.log(token);
+  console.log(token);
 
   if (!token) {
     return next("You are not logged in! Please log in to get access.", 401);
@@ -85,7 +85,7 @@ const protect = async (req, res, next) => {
 
   // 2) Verification token ... verify is async function which give us promise which is awit
   const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
-  // console.log(decoded);
+  console.log(decoded);
 
   // 3) Check if user still exists
   const currentUser = await User.findById(decoded.id);
@@ -94,7 +94,7 @@ const protect = async (req, res, next) => {
   }
 
   // GRANT ACCESS TO PROTECTED ROUTE
-  // console.log(currentUser);
+  console.log(currentUser);
   req.user = currentUser; // this puting extra information might be usefull in futrue
   // console.log(req.user);
   next();
